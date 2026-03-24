@@ -1,0 +1,9 @@
+{
+  "name": "internal-comms-ops-dashboard",
+  "version": "1.0.0",
+  "description": "Internal Comms Operations dashboard prototype for one human plus AI",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  }
+}

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Internal Comms Operations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">IO</div>
+          <div>
+            <p class="eyebrow">One Human + AI</p>
+            <h1>Internal Comms Ops</h1>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#overview">Overview</a>
+          <a href="#intake">Request Intake</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#calendar">Calendar</a>
+          <a href="#repository">Repository</a>
+          <a href="#analytics">Analytics</a>
+          <a href="#insights">AI Insights</a>
+        </nav>
+        <div class="sidebar-card">
+          <p class="eyebrow">Operating Model</p>
+          <h3>Operator Coverage</h3>
+          <p>
+            One communications operator supported by AI triage, drafting,
+            duplicate detection and stakeholder question forecasting.
+          </p>
+          <ul class="mini-list">
+            <li>17 live requests</li>
+            <li>4 approvals awaiting response</li>
+            <li>91% drafting automation coverage</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <section class="hero" id="overview">
+          <div>
+            <p class="eyebrow">Enterprise Prototype</p>
+            <h2>Run internal communications like a compact operations centre.</h2>
+            <p class="hero-copy">
+              Intake, prioritise, draft, approve, publish and learn from every
+              communication request with one operator and an AI copilot.
+            </p>
+          </div>
+          <div class="hero-actions">
+            <button class="primary-button" data-scroll-target="#intake">Create New Request</button>
+            <button class="secondary-button" data-scroll-target="#insights">Review AI Risks</button>
+          </div>
+        </section>
+
+        <section class="stats-grid">
+          <article class="stat-card">
+            <p class="eyebrow">This Week</p>
+            <h3>42</h3>
+            <p>Total requests handled</p>
+            <span class="delta positive">+18% vs last week</span>
+          </article>
+          <article class="stat-card">
+            <p class="eyebrow">Average Draft Time</p>
+            <h3>11 min</h3>
+            <p>From intake to first usable draft</p>
+            <span class="delta positive">AI saves 6.8 hrs/day</span>
+          </article>
+          <article class="stat-card">
+            <p class="eyebrow">Approval SLA</p>
+            <h3>86%</h3>
+            <p>Requests approved within target window</p>
+            <span class="delta warning">2 executive items at risk</span>
+          </article>
+          <article class="stat-card">
+            <p class="eyebrow">Audience Reach</p>
+            <h3>37.4k</h3>
+            <p>Employees reached across current campaigns</p>
+            <span class="delta positive">72% targeted, not broadcast</span>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <div class="panel panel-large" id="intake">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Comms Request Intake</p>
+                <h3>Submit and auto-score a request</h3>
+              </div>
+              <span class="tag neutral">Live prototype</span>
+            </div>
+            <form id="request-form" class="request-form">
+              <label>
+                Request title
+                <input type="text" name="title" placeholder="Q2 benefits enrolment reminder" required />
+              </label>
+              <label>
+                Request owner
+                <input type="text" name="owner" placeholder="Priya Shah" required />
+              </label>
+              <label>
+                Business unit
+                <select name="businessUnit">
+                  <option>People & Culture</option>
+                  <option>Technology</option>
+                  <option>Operations</option>
+                  <option>Finance</option>
+                  <option>Corporate Affairs</option>
+                </select>
+              </label>
+              <label>
+                Objective
+                <select name="objective">
+                  <option>Awareness</option>
+                  <option>Action</option>
+                  <option>Change adoption</option>
+                  <option>Leadership visibility</option>
+                  <option>Risk mitigation</option>
+                </select>
+              </label>
+              <label>
+                Audience size
+                <input type="number" name="audienceSize" value="1800" min="50" max="50000" required />
+              </label>
+              <label>
+                Deadline
+                <input type="date" name="deadline" required />
+              </label>
+              <label>
+                Sensitivity
+                <select name="sensitivity">
+                  <option value="2">Standard</option>
+                  <option value="5">Leadership-sensitive</option>
+                  <option value="8">Employee relations</option>
+                  <option value="10">Regulatory / legal</option>
+                </select>
+              </label>
+              <label>
+                Desired action date
+                <input type="date" name="actionDate" required />
+              </label>
+              <label class="full-width">
+                Brief
+                <textarea
+                  name="brief"
+                  rows="4"
+                  placeholder="Share the business context, key message, target audience and what employees need to do."
+                  required
+                ></textarea>
+              </label>
+              <label class="checkbox-row full-width">
+                <input type="checkbox" name="managerCascade" checked />
+                Include manager cascade brief
+              </label>
+              <button type="submit" class="primary-button full-width">Generate Recommendation and Draft Pack</button>
+            </form>
+          </div>
+
+          <div class="panel" id="prioritisation">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Prioritisation Engine</p>
+                <h3>Request scorecard</h3>
+              </div>
+            </div>
+            <div id="score-summary" class="score-summary"></div>
+            <div class="score-bars">
+              <div><span>Urgency</span><div class="progress"><div id="urgency-bar"></div></div></div>
+              <div><span>Reach</span><div class="progress"><div id="reach-bar"></div></div></div>
+              <div><span>Risk</span><div class="progress"><div id="risk-bar"></div></div></div>
+              <div><span>Complexity</span><div class="progress"><div id="complexity-bar"></div></div></div>
+            </div>
+          </div>
+
+          <div class="panel" id="recommendation">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Audience & Channel Recommendation</p>
+                <h3>Best-fit communication mix</h3>
+              </div>
+            </div>
+            <div id="recommendation-output" class="recommendation-output"></div>
+          </div>
+
+          <div class="panel panel-large" id="drafts">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Draft Generation</p>
+                <h3>Email, intranet, FAQ and manager brief</h3>
+              </div>
+              <span class="tag accent">AI assisted</span>
+            </div>
+            <div class="draft-tabs">
+              <button class="tab active" data-draft="email">Email</button>
+              <button class="tab" data-draft="intranet">Intranet</button>
+              <button class="tab" data-draft="faq">FAQ</button>
+              <button class="tab" data-draft="manager">Manager Brief</button>
+            </div>
+            <pre id="draft-output" class="draft-output"></pre>
+          </div>
+
+          <div class="panel panel-large" id="workflow">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Approval Workflow Tracking</p>
+                <h3>Live requests and status</h3>
+              </div>
+            </div>
+            <div id="workflow-list" class="workflow-list"></div>
+          </div>
+
+          <div class="panel panel-large" id="calendar">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Editorial Calendar</p>
+                <h3>Upcoming campaigns and comms moments</h3>
+              </div>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
+          </div>
+
+          <div class="panel panel-large" id="repository">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Content Repository</p>
+                <h3>Reusable assets and search</h3>
+              </div>
+              <input id="repository-search" type="search" placeholder="Search by keyword, audience or owner" />
+            </div>
+            <div id="repository-list" class="repository-list"></div>
+          </div>
+
+          <div class="panel panel-large" id="analytics">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Performance Dashboard</p>
+                <h3>Channel effectiveness and response</h3>
+              </div>
+            </div>
+            <div class="analytics-layout">
+              <div id="analytics-cards" class="analytics-cards"></div>
+              <div id="channel-performance" class="bar-chart"></div>
+            </div>
+          </div>
+
+          <div class="panel panel-large" id="insights">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">AI Insights Panel</p>
+                <h3>Risks, overlaps, duplication and likely questions</h3>
+              </div>
+              <span class="tag warning">Needs review</span>
+            </div>
+            <div id="insights-list" class="insights-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>

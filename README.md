@@ -22,6 +22,11 @@ It demonstrates how one experienced operator, supported by AI, can handle work t
 - Designed for realism: large-enterprise language, plausible fake data and a UI that feels like an internal product rather than a quick mock-up
 - Easy to run locally: lightweight Node server with no front-end build tooling required
 
+## Portfolio Assets
+
+- [Project Story](./PROJECT-STORY.md): narrative framing for portfolio links, applications or stakeholder sharing
+- [Demo Script](./DEMO-SCRIPT.md): short and extended talk tracks for live walkthroughs or interview demos
+
 ## What It Does
 
 - Captures new comms requests through a structured intake form

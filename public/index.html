@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0f2342" />
     <title>Internal Comms Operations</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -47,6 +49,18 @@
       </aside>
 
       <main class="main-content">
+        <section class="topbar" aria-label="Operator status">
+          <div class="topbar-group">
+            <span class="topbar-label">Operator desk</span>
+            <strong>Comms Ops Control Centre</strong>
+          </div>
+          <div class="topbar-meta">
+            <span class="topbar-pill">Live queue <strong id="live-queue-count">17</strong></span>
+            <span class="topbar-pill">Approvals due <strong id="approval-count">4</strong></span>
+            <span class="topbar-pill">Today <strong id="today-label"></strong></span>
+          </div>
+        </section>
+
         <section class="hero" id="overview">
           <div>
             <p class="eyebrow">Enterprise Prototype</p>
@@ -263,6 +277,11 @@
             <div id="insights-list" class="insights-list"></div>
           </div>
         </section>
+
+        <footer class="app-footer">
+          <p>Built for one human operator running enterprise internal comms with AI support.</p>
+          <p>Prototype modules: intake, scoring, channel planning, drafting, approvals, calendar, repository and insight monitoring.</p>
+        </footer>
       </main>
     </div>
     <script src="/app.js"></script>

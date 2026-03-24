@@ -169,6 +169,9 @@ const state = {
 };
 
 const elements = {
+  liveQueueCount: document.querySelector("#live-queue-count"),
+  approvalCount: document.querySelector("#approval-count"),
+  todayLabel: document.querySelector("#today-label"),
   form: document.querySelector("#request-form"),
   scoreSummary: document.querySelector("#score-summary"),
   urgencyBar: document.querySelector("#urgency-bar"),
@@ -187,6 +190,17 @@ const elements = {
   tabs: document.querySelectorAll(".tab"),
   scrollButtons: document.querySelectorAll("[data-scroll-target]")
 };
+
+function renderTopbar() {
+  const approvalItems = state.requests.filter((request) => request.stage === "approval").length;
+  elements.liveQueueCount.textContent = String(state.requests.length);
+  elements.approvalCount.textContent = String(approvalItems);
+  elements.todayLabel.textContent = today.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
 
 function setDefaultDates() {
   elements.form.deadline.value = plusDays(4);
@@ -564,6 +578,7 @@ function submitRequest(event) {
   renderScorecard(score);
   renderRecommendation(recommendation, request, score);
   setActiveDraft("email");
+  renderTopbar();
   renderWorkflow();
   renderRepository();
   renderInsights();
@@ -640,6 +655,7 @@ function bootstrapDefaultRequest() {
 
 setDefaultDates();
 bootstrapDefaultRequest();
+renderTopbar();
 renderWorkflow();
 renderCalendar();
 renderRepository();

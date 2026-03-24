@@ -9,6 +9,12 @@ const plusDays = (days) => {
 const state = {
   activeDraft: "email",
   currentRequest: null,
+  ai: {
+    configured: false,
+    provider: "OpenAI",
+    model: "gpt-5-mini",
+    mode: "demo"
+  },
   requests: [
     {
       id: "CR-2418",
@@ -169,6 +175,12 @@ const state = {
 };
 
 const elements = {
+  aiModeLabel: document.querySelector("#ai-mode-label"),
+  aiStatusBadge: document.querySelector("#ai-status-badge"),
+  aiProvider: document.querySelector("#ai-provider"),
+  aiModel: document.querySelector("#ai-model"),
+  aiBehavior: document.querySelector("#ai-behavior"),
+  generationStatus: document.querySelector("#generation-status"),
   liveQueueCount: document.querySelector("#live-queue-count"),
   approvalCount: document.querySelector("#approval-count"),
   todayLabel: document.querySelector("#today-label"),
@@ -191,6 +203,23 @@ const elements = {
   scrollButtons: document.querySelectorAll("[data-scroll-target]")
 };
 
+function updateGenerationNote(message, isError = false) {
+  elements.generationStatus.textContent = message;
+  elements.generationStatus.style.color = isError ? "var(--red)" : "var(--muted)";
+}
+
+function renderAiStatus() {
+  elements.aiModeLabel.textContent = state.ai.mode === "live" ? "Live OpenAI" : "Demo";
+  elements.aiStatusBadge.textContent = state.ai.mode === "live" ? "Live OpenAI" : "Demo mode";
+  elements.aiStatusBadge.className = `tag ${state.ai.mode === "live" ? "live" : "neutral"}`;
+  elements.aiProvider.textContent = state.ai.provider;
+  elements.aiModel.textContent = state.ai.model;
+  elements.aiBehavior.textContent =
+    state.ai.mode === "live"
+      ? "Recommendations, drafts and insights are being generated through the OpenAI Responses API."
+      : "Recommendations, drafts and insights are currently using the built-in demo engine until an OpenAI key is configured.";
+}
+
 function renderTopbar() {
   const approvalItems = state.requests.filter((request) => request.stage === "approval").length;
   elements.liveQueueCount.textContent = String(state.requests.length);
@@ -200,6 +229,27 @@ function renderTopbar() {
     month: "short",
     year: "numeric"
   });
+}
+
+async function fetchAiStatus() {
+  try {
+    const response = await fetch("/api/status");
+    const payload = await response.json();
+    state.ai = {
+      configured: payload.configured,
+      provider: payload.provider || "OpenAI",
+      model: payload.model || "gpt-5-mini",
+      mode: payload.mode || "demo"
+    };
+    renderAiStatus();
+    updateGenerationNote(
+      state.ai.mode === "live"
+        ? `Live OpenAI mode is active on ${state.ai.model}.`
+        : "Demo mode active. Add `OPENAI_API_KEY` on the server to enable live generation."
+    );
+  } catch {
+    renderAiStatus();
+  }
 }
 
 function setDefaultDates() {
@@ -349,6 +399,51 @@ Manager action
 - Share the message in your next team touchpoint.
 - Route unresolved questions back to Internal Comms Ops for FAQ updates.`
   };
+}
+
+function buildLocalInsights(request, recommendation, score) {
+  return [
+    {
+      title: `New request risk scan: ${request.title}`,
+      severity: score.risk >= 80 ? "risk" : "review",
+      summary: `AI flagged this request as ${score.band.toLowerCase()} priority with score ${score.total}.`,
+      points: [
+        `Audience recommendation: ${recommendation.audience}.`,
+        `Suggested channels: ${recommendation.channels.join(", ")}.`,
+        score.risk >= 80
+          ? "Escalate to legal or executive reviewer before publication."
+          : "No major duplication detected; proceed to draft refinement."
+      ]
+    }
+  ];
+}
+
+function buildLocalPack(request, score) {
+  const recommendation = getRecommendations(request, score);
+  const drafts = buildDrafts(request, recommendation, score);
+  const insights = buildLocalInsights(request, recommendation, score);
+  return { recommendation, drafts, insights };
+}
+
+async function generateAiPack(request, score) {
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ request, score })
+  });
+
+  const payload = await response.json();
+  if (!response.ok) {
+    throw new Error(payload.error || "Unable to generate AI content.");
+  }
+
+  state.ai.provider = payload.provider || "OpenAI";
+  state.ai.model = payload.model || state.ai.model;
+  state.ai.mode = "live";
+  renderAiStatus();
+  return payload.pack;
 }
 
 function renderScorecard(score) {
@@ -528,14 +623,39 @@ function createRequestFromForm(formData) {
   };
 }
 
-function submitRequest(event) {
+async function submitRequest(event) {
   event.preventDefault();
   const request = createRequestFromForm(new FormData(elements.form));
   const score = scoreRequest(request);
-  const recommendation = getRecommendations(request, score);
-  const drafts = buildDrafts(request, recommendation, score);
+  const submitButton = elements.form.querySelector('button[type="submit"]');
+  const originalLabel = submitButton.textContent;
+  submitButton.disabled = true;
+  submitButton.textContent = state.ai.mode === "live" ? "Generating with OpenAI..." : "Generating...";
+  updateGenerationNote(
+    state.ai.mode === "live"
+      ? `Generating recommendation, drafts and insight pack with ${state.ai.model}...`
+      : "Using demo mode to generate recommendation, drafts and insight pack..."
+  );
 
-  state.currentRequest = { ...request, score, recommendation, drafts };
+  let pack;
+  try {
+    pack = state.ai.mode === "live" ? await generateAiPack(request, score) : buildLocalPack(request, score);
+  } catch (error) {
+    pack = buildLocalPack(request, score);
+    state.ai.mode = "demo";
+    renderAiStatus();
+    updateGenerationNote(`${error.message} Falling back to demo generation.`, true);
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = originalLabel;
+  }
+
+  state.currentRequest = {
+    ...request,
+    score,
+    recommendation: pack.recommendation,
+    drafts: pack.drafts
+  };
   state.activeDraft = "email";
 
   state.requests.unshift({
@@ -548,7 +668,7 @@ function submitRequest(event) {
     score: score.total,
     status: "Awaiting operator review",
     stage: score.total >= 80 ? "approval" : "review",
-    channels: recommendation.channels,
+    channels: pack.recommendation.channels,
     risk: score.risk >= 80 ? "Sensitive content requires approval workflow." : "Standard enterprise review path."
   });
 
@@ -556,32 +676,25 @@ function submitRequest(event) {
     title: `${request.title} Draft Pack`,
     type: "Draft pack",
     owner: request.owner,
-    audience: recommendation.audience,
+    audience: pack.recommendation.audience,
     updated: "Just now",
     tags: [request.businessUnit.toLowerCase(), request.objective.toLowerCase(), "new request"],
     description: "Auto-generated draft set created from the intake form and scoring engine."
   });
 
-  state.insights.unshift({
-    title: `New request risk scan: ${request.title}`,
-    severity: score.risk >= 80 ? "risk" : "review",
-    summary: `AI flagged this request as ${score.band.toLowerCase()} priority with score ${score.total}.`,
-    points: [
-      `Audience recommendation: ${recommendation.audience}.`,
-      `Suggested channels: ${recommendation.channels.join(", ")}.`,
-      score.risk >= 80
-        ? "Escalate to legal or executive reviewer before publication."
-        : "No major duplication detected; proceed to draft refinement."
-    ]
-  });
+  state.insights.unshift(...pack.insights.slice(0, 2));
 
   renderScorecard(score);
-  renderRecommendation(recommendation, request, score);
+  renderRecommendation(pack.recommendation, request, score);
   setActiveDraft("email");
   renderTopbar();
   renderWorkflow();
   renderRepository();
   renderInsights();
+
+  if (state.ai.mode === "live") {
+    updateGenerationNote(`Live OpenAI generation completed on ${state.ai.model}.`);
+  }
 }
 
 function filterRepository(event) {
@@ -655,6 +768,7 @@ function bootstrapDefaultRequest() {
 
 setDefaultDates();
 bootstrapDefaultRequest();
+renderAiStatus();
 renderTopbar();
 renderWorkflow();
 renderCalendar();
@@ -662,3 +776,4 @@ renderRepository();
 renderAnalytics();
 renderInsights();
 bindEvents();
+fetchAiStatus();

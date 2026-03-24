@@ -59,11 +59,28 @@ It demonstrates how one experienced operator, supported by AI, can handle work t
 
 ## Local Run
 
+1. Create a local environment file:
+
+```bash
+cp .env.example .env
+```
+
+2. Add your OpenAI key:
+
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_MODEL=gpt-5-mini
+```
+
+3. Start the app:
+
 ```bash
 npm start
 ```
 
 Then open [http://localhost:3000](http://localhost:3000).
+
+If no OpenAI key is configured, the dashboard still runs in demo mode with built-in recommendation, draft and insight generation.
 
 ## Project Structure
 
@@ -76,6 +93,7 @@ Then open [http://localhost:3000](http://localhost:3000).
 ├── assets/
 │   ├── dashboard-overview.svg
 │   └── dashboard-workflow.svg
+├── .env.example
 ├── server.js
 └── package.json
 ```
@@ -96,7 +114,7 @@ Internal comms teams often spend too much time chasing inputs, formatting drafts
 
 ## Next Good Enhancements
 
-- persistent storage for requests and repository items
+- save requests, drafts, approvals and repository assets to persistent storage
 - role-based approvals and audit trail history
 - export to Word, email and CMS formats
 - integration with Teams, SharePoint or intranet tooling

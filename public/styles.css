@@ -166,6 +166,10 @@ textarea {
   font-weight: 600;
 }
 
+.topbar-pill-accent {
+  background: linear-gradient(135deg, rgba(22, 58, 112, 0.12), rgba(28, 166, 163, 0.16));
+}
+
 .hero {
   display: flex;
   justify-content: space-between;
@@ -312,9 +316,23 @@ textarea {
   color: var(--teal);
 }
 
+.tag.live {
+  background: rgba(33, 140, 90, 0.12);
+  color: var(--green);
+}
+
 .tag.warning {
   background: rgba(210, 90, 90, 0.12);
   color: var(--red);
+}
+
+code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 8px;
+  background: #edf2fb;
+  color: var(--navy);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9em;
 }
 
 .request-form {
@@ -342,6 +360,13 @@ textarea {
 
 .request-form textarea {
   resize: vertical;
+}
+
+.form-note {
+  margin: -2px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
 .full-width {

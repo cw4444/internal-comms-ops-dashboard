@@ -55,6 +55,7 @@
             <strong>Comms Ops Control Centre</strong>
           </div>
           <div class="topbar-meta">
+            <span class="topbar-pill topbar-pill-accent">AI mode <strong id="ai-mode-label">Demo</strong></span>
             <span class="topbar-pill">Live queue <strong id="live-queue-count">17</strong></span>
             <span class="topbar-pill">Approvals due <strong id="approval-count">4</strong></span>
             <span class="topbar-pill">Today <strong id="today-label"></strong></span>
@@ -176,7 +177,44 @@
                 Include manager cascade brief
               </label>
               <button type="submit" class="primary-button full-width">Generate Recommendation and Draft Pack</button>
+              <p id="generation-status" class="form-note full-width">
+                Demo mode active. Add `OPENAI_API_KEY` on the server to enable live generation.
+              </p>
             </form>
+          </div>
+
+          <div class="panel" id="ai-config">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">AI Configuration</p>
+                <h3>OpenAI connection</h3>
+              </div>
+              <span id="ai-status-badge" class="tag neutral">Demo mode</span>
+            </div>
+            <div class="recommendation-output">
+              <div class="recommendation-block">
+                <h4>Provider</h4>
+                <p id="ai-provider">OpenAI</p>
+              </div>
+              <div class="recommendation-block">
+                <h4>Model</h4>
+                <p id="ai-model">gpt-5-mini</p>
+              </div>
+              <div class="recommendation-block">
+                <h4>Secure setup</h4>
+                <p>
+                  Add <code>OPENAI_API_KEY=your_key_here</code> to the local
+                  <code>.env</code> file. Optional:
+                  <code>OPENAI_MODEL=gpt-5-mini</code>.
+                </p>
+              </div>
+              <div class="recommendation-block">
+                <h4>Current behavior</h4>
+                <p id="ai-behavior">
+                  Recommendations, drafts and insights currently use the built-in demo engine.
+                </p>
+              </div>
+            </div>
           </div>
 
           <div class="panel" id="prioritisation">

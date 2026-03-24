@@ -1,8 +1,10 @@
 # Internal Comms Operations Dashboard
 
-A working prototype for a one-human-plus-AI internal communications operation.
+Enterprise internal comms operations for one human operator plus AI.
 
-This project is designed as a realistic enterprise dashboard that replaces much of the admin, coordination, drafting and triage load of a traditional internal comms team. It gives a single operator an AI-assisted control centre for request intake, prioritisation, drafting, approvals, calendar management, content reuse and performance monitoring.
+This project is a realistic enterprise dashboard that replaces much of the admin, coordination, drafting and triage load of a traditional internal comms team. It gives a single operator an AI-assisted control centre for request intake, prioritisation, drafting, approvals, calendar management, content reuse and performance monitoring.
+
+![Social preview](./assets/social-preview.svg)
 
 ![Dashboard overview](./assets/dashboard-overview.svg)
 
@@ -68,4 +70,3 @@ This prototype is aimed at large enterprise internal communications teams that w
 - export to Word, email and CMS formats
 - integration with Teams, SharePoint or intranet tooling
 - analytics fed by real campaign performance data
-

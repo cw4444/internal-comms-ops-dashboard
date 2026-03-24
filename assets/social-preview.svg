@@ -1,0 +1,56 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1280" height="640" fill="#EFF4FB"/>
+  <rect x="34" y="34" width="1212" height="572" rx="36" fill="url(#bg)"/>
+  <rect x="76" y="84" width="86" height="86" rx="24" fill="url(#accent)"/>
+  <text x="98" y="138" fill="#0D223A" font-family="Arial, sans-serif" font-size="36" font-weight="700">IO</text>
+
+  <text x="190" y="114" fill="#BFD7FF" font-family="Arial, sans-serif" font-size="16" letter-spacing="3">ONE HUMAN + AI</text>
+  <text x="190" y="168" fill="white" font-family="Arial, sans-serif" font-size="54" font-weight="700">Internal Comms Operations</text>
+  <text x="190" y="214" fill="#E9F2FF" font-family="Arial, sans-serif" font-size="28">A compact enterprise comms operating system for a single operator.</text>
+
+  <g opacity="0.98">
+    <rect x="76" y="276" width="468" height="266" rx="28" fill="rgba(255,255,255,0.9)"/>
+    <text x="110" y="320" fill="#6F7D94" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">INTAKE + PRIORITISATION</text>
+    <text x="110" y="366" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Score requests, route channels, generate drafts.</text>
+    <rect x="110" y="394" width="184" height="44" rx="16" fill="#EDF4FF"/>
+    <rect x="308" y="394" width="202" height="44" rx="16" fill="#EDF4FF"/>
+    <rect x="110" y="454" width="400" height="16" rx="8" fill="#E6ECF5"/>
+    <rect x="110" y="454" width="268" height="16" rx="8" fill="url(#meter)"/>
+    <rect x="110" y="490" width="400" height="16" rx="8" fill="#E6ECF5"/>
+    <rect x="110" y="490" width="214" height="16" rx="8" fill="url(#meter)"/>
+  </g>
+
+  <g opacity="0.98">
+    <rect x="570" y="276" width="286" height="266" rx="28" fill="rgba(255,255,255,0.9)"/>
+    <text x="602" y="320" fill="#6F7D94" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">WORKFLOW + CALENDAR</text>
+    <text x="602" y="364" fill="#132033" font-family="Arial, sans-serif" font-size="26" font-weight="700">Track approvals and publish with confidence.</text>
+    <rect x="602" y="398" width="220" height="56" rx="18" fill="#FFFFFF" stroke="#DCE3EE"/>
+    <rect x="602" y="470" width="220" height="56" rx="18" fill="#FFFFFF" stroke="#DCE3EE"/>
+  </g>
+
+  <g opacity="0.98">
+    <rect x="882" y="276" width="322" height="266" rx="28" fill="rgba(255,255,255,0.9)"/>
+    <text x="914" y="320" fill="#6F7D94" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">ANALYTICS + AI INSIGHTS</text>
+    <text x="914" y="364" fill="#132033" font-family="Arial, sans-serif" font-size="26" font-weight="700">Spot overlap, duplication and likely employee questions.</text>
+    <rect x="914" y="402" width="256" height="16" rx="8" fill="#E6ECF5"/>
+    <rect x="914" y="402" width="192" height="16" rx="8" fill="url(#meter)"/>
+    <rect x="914" y="440" width="256" height="72" rx="22" fill="#FFFFFF" stroke="#DCE3EE"/>
+  </g>
+
+  <text x="76" y="585" fill="#D3E4FF" font-family="Arial, sans-serif" font-size="18">Internal requests. Audience targeting. Draft generation. Approval flow. Content reuse. Performance visibility.</text>
+
+  <defs>
+    <linearGradient id="bg" x1="34" y1="34" x2="1246" y2="606" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E2445"/>
+      <stop offset="1" stop-color="#1A4A80"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="76" y1="84" x2="162" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#72C5FF"/>
+      <stop offset="1" stop-color="#45DFC3"/>
+    </linearGradient>
+    <linearGradient id="meter" x1="110" y1="462" x2="378" y2="462" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#163A70"/>
+      <stop offset="1" stop-color="#1CA6A3"/>
+    </linearGradient>
+  </defs>
+</svg>

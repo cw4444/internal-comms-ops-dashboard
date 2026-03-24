@@ -1,0 +1,66 @@
+<svg width="1600" height="980" viewBox="0 0 1600 980" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="980" rx="36" fill="#F4F7FB"/>
+  <rect x="40" y="40" width="1520" height="110" rx="28" fill="url(#paint0_linear)"/>
+  <text x="84" y="86" fill="#CBE0FF" font-family="Arial, sans-serif" font-size="13" letter-spacing="2">OPERATIONS VIEW</text>
+  <text x="84" y="128" fill="white" font-family="Arial, sans-serif" font-size="38" font-weight="700">Workflow, repository, analytics and AI risk monitoring</text>
+
+  <rect x="40" y="180" width="760" height="344" rx="28" fill="rgba(255,255,255,0.9)"/>
+  <text x="76" y="220" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">APPROVAL WORKFLOW TRACKING</text>
+  <text x="76" y="256" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Live requests and status</text>
+
+  <g>
+    <rect x="76" y="286" width="688" height="70" rx="18" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="682" y="304" width="60" height="28" rx="14" fill="#FDEFD9"/>
+    <rect x="76" y="372" width="688" height="70" rx="18" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="682" y="390" width="60" height="28" rx="14" fill="#E7F0FF"/>
+    <rect x="76" y="458" width="688" height="42" rx="18" fill="#FFFFFF" stroke="#DFE6F0"/>
+  </g>
+  <text x="100" y="330" fill="#132033" font-family="Arial, sans-serif" font-size="20" font-weight="700">CR-2418 · Global hybrid working principles refresh</text>
+  <text x="100" y="417" fill="#132033" font-family="Arial, sans-serif" font-size="20" font-weight="700">CR-2412 · ERP downtime notification</text>
+  <text x="100" y="484" fill="#5F6E86" font-family="Arial, sans-serif" font-size="17">Priority, score, channels and risk notes shown inline for operator triage.</text>
+
+  <rect x="824" y="180" width="736" height="344" rx="28" fill="rgba(255,255,255,0.9)"/>
+  <text x="860" y="220" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">EDITORIAL CALENDAR</text>
+  <text x="860" y="256" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Upcoming campaigns and comms moments</text>
+  <g>
+    <rect x="860" y="290" width="310" height="96" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="1186" y="290" width="310" height="96" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="860" y="402" width="310" height="96" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="1186" y="402" width="310" height="96" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+  </g>
+
+  <rect x="40" y="548" width="760" height="392" rx="28" fill="rgba(255,255,255,0.9)"/>
+  <text x="76" y="588" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">CONTENT REPOSITORY</text>
+  <text x="76" y="624" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Reusable assets and search</text>
+  <rect x="538" y="584" width="226" height="42" rx="16" fill="#FFFFFF" stroke="#DFE6F0"/>
+  <g>
+    <rect x="76" y="654" width="688" height="82" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="76" y="752" width="688" height="82" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="76" y="850" width="688" height="54" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+  </g>
+
+  <rect x="824" y="548" width="356" height="392" rx="28" fill="rgba(255,255,255,0.9)"/>
+  <text x="860" y="588" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">PERFORMANCE DASHBOARD</text>
+  <text x="860" y="624" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Channel effectiveness</text>
+  <g>
+    <rect x="860" y="654" width="284" height="76" rx="18" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="860" y="744" width="284" height="76" rx="18" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="860" y="834" width="284" height="76" rx="18" fill="#FFFFFF" stroke="#DFE6F0"/>
+  </g>
+
+  <rect x="1204" y="548" width="356" height="392" rx="28" fill="rgba(255,255,255,0.9)"/>
+  <text x="1240" y="588" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">AI INSIGHTS PANEL</text>
+  <text x="1240" y="624" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Risks and overlaps</text>
+  <g>
+    <rect x="1240" y="654" width="284" height="92" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="1240" y="764" width="284" height="92" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+    <rect x="1240" y="874" width="284" height="42" rx="20" fill="#FFFFFF" stroke="#DFE6F0"/>
+  </g>
+
+  <defs>
+    <linearGradient id="paint0_linear" x1="40" y1="40" x2="1560" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E2445"/>
+      <stop offset="1" stop-color="#1A4A80"/>
+    </linearGradient>
+  </defs>
+</svg>

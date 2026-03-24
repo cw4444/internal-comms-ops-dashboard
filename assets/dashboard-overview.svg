@@ -1,0 +1,113 @@
+<svg width="1600" height="980" viewBox="0 0 1600 980" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="980" rx="36" fill="#EFF4FB"/>
+  <rect x="28" y="28" width="280" height="924" rx="28" fill="url(#paint0_linear)"/>
+  <rect x="60" y="68" width="56" height="56" rx="18" fill="url(#paint1_linear)"/>
+  <text x="74" y="103" fill="#0D223A" font-family="Arial, sans-serif" font-size="24" font-weight="700">IO</text>
+  <text x="134" y="87" fill="#CFE2FF" font-family="Arial, sans-serif" font-size="14" letter-spacing="2">ONE HUMAN + AI</text>
+  <text x="134" y="114" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="700">Internal Comms Ops</text>
+
+  <g fill="#DDE9FF" font-family="Arial, sans-serif" font-size="18">
+    <text x="60" y="190">Overview</text>
+    <text x="60" y="235">Request Intake</text>
+    <text x="60" y="280">Workflow</text>
+    <text x="60" y="325">Calendar</text>
+    <text x="60" y="370">Repository</text>
+    <text x="60" y="415">Analytics</text>
+    <text x="60" y="460">AI Insights</text>
+  </g>
+
+  <rect x="60" y="670" width="216" height="206" rx="22" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.12)"/>
+  <text x="84" y="712" fill="#CFE2FF" font-family="Arial, sans-serif" font-size="12" letter-spacing="2">OPERATING MODEL</text>
+  <text x="84" y="748" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="700">Operator Coverage</text>
+  <text x="84" y="790" fill="#DDE9FF" font-family="Arial, sans-serif" font-size="16">17 live requests</text>
+  <text x="84" y="820" fill="#DDE9FF" font-family="Arial, sans-serif" font-size="16">4 approvals awaiting response</text>
+  <text x="84" y="850" fill="#DDE9FF" font-family="Arial, sans-serif" font-size="16">91% drafting automation</text>
+
+  <rect x="336" y="40" width="1224" height="170" rx="30" fill="url(#paint2_linear)"/>
+  <text x="378" y="88" fill="#BFD7FF" font-family="Arial, sans-serif" font-size="13" letter-spacing="2">ENTERPRISE PROTOTYPE</text>
+  <text x="378" y="138" fill="white" font-family="Arial, sans-serif" font-size="42" font-weight="700">Run internal communications like a compact operations centre.</text>
+  <text x="378" y="178" fill="#E7F1FF" font-family="Arial, sans-serif" font-size="20">Intake, prioritise, draft, approve, publish and learn from every communication request.</text>
+  <rect x="1245" y="92" width="140" height="48" rx="18" fill="url(#paint1_linear)"/>
+  <text x="1270" y="122" fill="#0D223A" font-family="Arial, sans-serif" font-size="16" font-weight="700">New Request</text>
+  <rect x="1400" y="92" width="118" height="48" rx="18" fill="rgba(255,255,255,0.14)"/>
+  <text x="1430" y="122" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="700">AI Risks</text>
+
+  <g>
+    <rect x="336" y="236" width="290" height="132" rx="24" fill="rgba(255,255,255,0.9)"/>
+    <rect x="644" y="236" width="290" height="132" rx="24" fill="rgba(255,255,255,0.9)"/>
+    <rect x="952" y="236" width="290" height="132" rx="24" fill="rgba(255,255,255,0.9)"/>
+    <rect x="1260" y="236" width="300" height="132" rx="24" fill="rgba(255,255,255,0.9)"/>
+    <text x="364" y="274" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">THIS WEEK</text>
+    <text x="364" y="325" fill="#132033" font-family="Arial, sans-serif" font-size="42" font-weight="700">42</text>
+    <text x="364" y="350" fill="#5F6E86" font-family="Arial, sans-serif" font-size="16">Total requests handled</text>
+    <text x="672" y="274" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">AVERAGE DRAFT TIME</text>
+    <text x="672" y="325" fill="#132033" font-family="Arial, sans-serif" font-size="42" font-weight="700">11 min</text>
+    <text x="980" y="274" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">APPROVAL SLA</text>
+    <text x="980" y="325" fill="#132033" font-family="Arial, sans-serif" font-size="42" font-weight="700">86%</text>
+    <text x="1288" y="274" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">AUDIENCE REACH</text>
+    <text x="1288" y="325" fill="#132033" font-family="Arial, sans-serif" font-size="42" font-weight="700">37.4k</text>
+  </g>
+
+  <rect x="336" y="394" width="602" height="526" rx="28" fill="rgba(255,255,255,0.88)"/>
+  <text x="370" y="434" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">COMMS REQUEST INTAKE</text>
+  <text x="370" y="468" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Submit and auto-score a request</text>
+  <g fill="#FDFEFF" stroke="#D9E1EF">
+    <rect x="370" y="500" width="248" height="60" rx="16"/>
+    <rect x="636" y="500" width="248" height="60" rx="16"/>
+    <rect x="370" y="578" width="248" height="60" rx="16"/>
+    <rect x="636" y="578" width="248" height="60" rx="16"/>
+    <rect x="370" y="656" width="248" height="60" rx="16"/>
+    <rect x="636" y="656" width="248" height="60" rx="16"/>
+    <rect x="370" y="734" width="514" height="92" rx="16"/>
+    <rect x="370" y="848" width="514" height="44" rx="16" fill="url(#paint1_linear)" stroke="none"/>
+  </g>
+
+  <rect x="962" y="394" width="290" height="250" rx="28" fill="rgba(255,255,255,0.88)"/>
+  <text x="994" y="434" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">PRIORITISATION ENGINE</text>
+  <text x="994" y="468" fill="#132033" font-family="Arial, sans-serif" font-size="28" font-weight="700">Request scorecard</text>
+  <rect x="994" y="490" width="226" height="88" rx="20" fill="#EEF4FF"/>
+  <text x="1018" y="528" fill="#132033" font-family="Arial, sans-serif" font-size="14">Priority Band</text>
+  <text x="1018" y="564" fill="#132033" font-family="Arial, sans-serif" font-size="34" font-weight="700">68</text>
+  <g>
+    <rect x="994" y="598" width="226" height="10" rx="5" fill="#E7ECF5"/>
+    <rect x="994" y="598" width="160" height="10" rx="5" fill="url(#paint3_linear)"/>
+    <rect x="994" y="624" width="226" height="10" rx="5" fill="#E7ECF5"/>
+    <rect x="994" y="624" width="112" height="10" rx="5" fill="url(#paint3_linear)"/>
+  </g>
+
+  <rect x="1270" y="394" width="290" height="250" rx="28" fill="rgba(255,255,255,0.88)"/>
+  <text x="1302" y="434" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">AUDIENCE & CHANNELS</text>
+  <text x="1302" y="468" fill="#132033" font-family="Arial, sans-serif" font-size="28" font-weight="700">Best-fit mix</text>
+  <rect x="1302" y="500" width="230" height="44" rx="16" fill="#EDF4FF"/>
+  <rect x="1302" y="556" width="98" height="36" rx="18" fill="#EDF4FF"/>
+  <rect x="1410" y="556" width="106" height="36" rx="18" fill="#EDF4FF"/>
+  <rect x="1302" y="604" width="134" height="36" rx="18" fill="#EDF4FF"/>
+
+  <rect x="962" y="664" width="598" height="256" rx="28" fill="rgba(255,255,255,0.88)"/>
+  <text x="994" y="704" fill="#73819A" font-family="Arial, sans-serif" font-size="13" letter-spacing="1.5">DRAFT GENERATION</text>
+  <text x="994" y="738" fill="#132033" font-family="Arial, sans-serif" font-size="30" font-weight="700">Email, intranet, FAQ and manager brief</text>
+  <rect x="994" y="760" width="84" height="34" rx="14" fill="#163A70"/>
+  <rect x="1088" y="760" width="96" height="34" rx="14" fill="#EDF2FB"/>
+  <rect x="1194" y="760" width="72" height="34" rx="14" fill="#EDF2FB"/>
+  <rect x="1276" y="760" width="132" height="34" rx="14" fill="#EDF2FB"/>
+  <rect x="994" y="814" width="534" height="82" rx="20" fill="#0F1F34"/>
+
+  <defs>
+    <linearGradient id="paint0_linear" x1="168" y1="28" x2="168" y2="952" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F2342"/>
+      <stop offset="1" stop-color="#14355F"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="60" y1="68" x2="1518" y2="892" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#72C5FF"/>
+      <stop offset="1" stop-color="#45DFC3"/>
+    </linearGradient>
+    <linearGradient id="paint2_linear" x1="336" y1="40" x2="1560" y2="210" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E2445"/>
+      <stop offset="1" stop-color="#1A4A80"/>
+    </linearGradient>
+    <linearGradient id="paint3_linear" x1="994" y1="603" x2="1220" y2="603" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#163A70"/>
+      <stop offset="1" stop-color="#1CA6A3"/>
+    </linearGradient>
+  </defs>
+</svg>

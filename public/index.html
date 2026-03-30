@@ -178,7 +178,7 @@
               </label>
               <button type="submit" class="primary-button full-width">Generate Recommendation and Draft Pack</button>
               <p id="generation-status" class="form-note full-width">
-                Demo mode active. Add `OPENAI_API_KEY` on the server to enable live generation.
+                Demo mode active. Add `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` on the server to enable live generation.
               </p>
             </form>
           </div>
@@ -187,25 +187,26 @@
             <div class="panel-header">
               <div>
                 <p class="eyebrow">AI Configuration</p>
-                <h3>OpenAI connection</h3>
+                <h3>Server-side AI connection</h3>
               </div>
               <span id="ai-status-badge" class="tag neutral">Demo mode</span>
             </div>
             <div class="recommendation-output">
               <div class="recommendation-block">
                 <h4>Provider</h4>
-                <p id="ai-provider">OpenAI</p>
+                <p id="ai-provider">Demo</p>
               </div>
               <div class="recommendation-block">
                 <h4>Model</h4>
-                <p id="ai-model">gpt-5-mini</p>
+                <p id="ai-model">gpt-4o</p>
               </div>
               <div class="recommendation-block">
                 <h4>Secure setup</h4>
                 <p>
-                  Add <code>OPENAI_API_KEY=your_key_here</code> to the local
-                  <code>.env</code> file. Optional:
-                  <code>OPENAI_MODEL=gpt-5-mini</code>.
+                  Add <code>OPENAI_API_KEY</code> or <code>ANTHROPIC_API_KEY</code>
+                  to the local <code>.env</code> file. Optional defaults:
+                  <code>OPENAI_MODEL=gpt-4o</code> or
+                  <code>ANTHROPIC_MODEL=claude-sonnet-4-20250514</code>.
                 </p>
               </div>
               <div class="recommendation-block">

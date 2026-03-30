@@ -65,11 +65,14 @@ It demonstrates how one experienced operator, supported by AI, can handle work t
 cp .env.example .env
 ```
 
-2. Add your OpenAI key:
+2. Add your AI key:
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
-OPENAI_MODEL=gpt-5-mini
+OPENAI_MODEL=gpt-4o
+
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+ANTHROPIC_MODEL=claude-sonnet-4-20250514
 ```
 
 3. Start the app:
@@ -80,7 +83,7 @@ npm start
 
 Then open [http://localhost:3000](http://localhost:3000).
 
-If no OpenAI key is configured, the dashboard still runs in demo mode with built-in recommendation, draft and insight generation.
+If no AI key is configured, the dashboard still runs in demo mode with built-in recommendation, draft and insight generation.
 
 ## Project Structure
 

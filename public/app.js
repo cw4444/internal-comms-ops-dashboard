@@ -11,8 +11,8 @@ const state = {
   currentRequest: null,
   ai: {
     configured: false,
-    provider: "OpenAI",
-    model: "gpt-5-mini",
+    provider: "Demo",
+    model: "gpt-4o",
     mode: "demo"
   },
   requests: [
@@ -209,15 +209,16 @@ function updateGenerationNote(message, isError = false) {
 }
 
 function renderAiStatus() {
-  elements.aiModeLabel.textContent = state.ai.mode === "live" ? "Live OpenAI" : "Demo";
-  elements.aiStatusBadge.textContent = state.ai.mode === "live" ? "Live OpenAI" : "Demo mode";
+  const liveLabel = state.ai.mode === "live" ? `Live ${state.ai.provider}` : "Demo";
+  elements.aiModeLabel.textContent = liveLabel;
+  elements.aiStatusBadge.textContent = state.ai.mode === "live" ? liveLabel : "Demo mode";
   elements.aiStatusBadge.className = `tag ${state.ai.mode === "live" ? "live" : "neutral"}`;
   elements.aiProvider.textContent = state.ai.provider;
   elements.aiModel.textContent = state.ai.model;
   elements.aiBehavior.textContent =
     state.ai.mode === "live"
-      ? "Recommendations, drafts and insights are being generated through the OpenAI Responses API."
-      : "Recommendations, drafts and insights are currently using the built-in demo engine until an OpenAI key is configured.";
+      ? `Recommendations, drafts and insights are being generated through ${state.ai.provider} on the server.`
+      : "Recommendations, drafts and insights are currently using the built-in demo engine until an AI key is configured.";
 }
 
 function renderTopbar() {
@@ -238,14 +239,14 @@ async function fetchAiStatus() {
     state.ai = {
       configured: payload.configured,
       provider: payload.provider || "OpenAI",
-      model: payload.model || "gpt-5-mini",
+      model: payload.model || "gpt-4o",
       mode: payload.mode || "demo"
     };
     renderAiStatus();
     updateGenerationNote(
       state.ai.mode === "live"
-        ? `Live OpenAI mode is active on ${state.ai.model}.`
-        : "Demo mode active. Add `OPENAI_API_KEY` on the server to enable live generation."
+        ? `Live ${state.ai.provider} mode is active on ${state.ai.model}.`
+        : "Demo mode active. Add `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` on the server to enable live generation."
     );
   } catch {
     renderAiStatus();
@@ -693,7 +694,7 @@ async function submitRequest(event) {
   renderInsights();
 
   if (state.ai.mode === "live") {
-    updateGenerationNote(`Live OpenAI generation completed on ${state.ai.model}.`);
+    updateGenerationNote(`Live ${state.ai.provider} generation completed on ${state.ai.model}.`);
   }
 }
 

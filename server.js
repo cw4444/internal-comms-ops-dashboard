@@ -6,8 +6,10 @@ loadEnvFile(path.join(__dirname, ".env"));
 
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, "public");
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
-const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5-mini";
+
+async function getAiRuntime() {
+  return import("./lib/ai-runtime.mjs");
+}
 
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -87,160 +89,19 @@ function readJsonBody(req) {
   });
 }
 
-function buildPrompt(request, score) {
-  return [
-    {
-      role: "system",
-      content: [
-        {
-          type: "input_text",
-          text:
-            "You are an enterprise internal communications strategist and writer. Return valid JSON only. No markdown fences. Be concise, realistic and specific. Your output must include recommendation, drafts and insights for a large enterprise environment."
-        }
-      ]
-    },
-    {
-      role: "user",
-      content: [
-        {
-          type: "input_text",
-          text: JSON.stringify({
-            task: "Create an internal communications recommendation and draft pack.",
-            outputShape: {
-              recommendation: {
-                audience: "string",
-                channels: ["string"],
-                cadence: "string",
-                rationale: "string"
-              },
-              drafts: {
-                email: "string",
-                intranet: "string",
-                faq: "string",
-                manager: "string"
-              },
-              insights: [
-                {
-                  title: "string",
-                  severity: "risk|review|active",
-                  summary: "string",
-                  points: ["string"]
-                }
-              ]
-            },
-            constraints: [
-              "Keep channels limited to the most credible three or four options.",
-              "Make the drafts immediately usable by an enterprise comms operator.",
-              "FAQ should include at least five questions.",
-              "Manager brief should give clear cascade guidance and likely employee questions.",
-              "Insights should focus on overlap risk, duplication risk and likely questions."
-            ],
-            request,
-            score
-          })
-        }
-      ]
-    }
-  ];
-}
-
-function extractOutputText(response) {
-  if (typeof response.output_text === "string" && response.output_text.trim()) {
-    return response.output_text.trim();
-  }
-
-  const chunks = [];
-  for (const item of response.output || []) {
-    if (!item.content) continue;
-    for (const part of item.content) {
-      if (part.type === "output_text" && part.text) {
-        chunks.push(part.text);
-      }
-    }
-  }
-
-  return chunks.join("\n").trim();
-}
-
-function parseJsonResponse(text) {
-  const cleaned = text.trim();
-  const direct = tryParse(cleaned);
-  if (direct) return direct;
-
-  const firstBrace = cleaned.indexOf("{");
-  const lastBrace = cleaned.lastIndexOf("}");
-  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
-    return tryParse(cleaned.slice(firstBrace, lastBrace + 1));
-  }
-
-  return null;
-}
-
-function tryParse(value) {
-  try {
-    return JSON.parse(value);
-  } catch {
-    return null;
-  }
-}
-
-function validateAiPack(payload) {
-  return Boolean(
-    payload &&
-      payload.recommendation &&
-      payload.drafts &&
-      payload.insights &&
-      typeof payload.recommendation.audience === "string" &&
-      Array.isArray(payload.recommendation.channels) &&
-      typeof payload.drafts.email === "string" &&
-      typeof payload.drafts.intranet === "string" &&
-      typeof payload.drafts.faq === "string" &&
-      typeof payload.drafts.manager === "string" &&
-      Array.isArray(payload.insights)
-  );
-}
-
-async function generateOpenAiPack(request, score) {
-  const response = await fetch("https://api.openai.com/v1/responses", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENAI_API_KEY}`
-    },
-    body: JSON.stringify({
-      model: OPENAI_MODEL,
-      input: buildPrompt(request, score)
-    })
-  });
-
-  const payload = await response.json();
-  if (!response.ok) {
-    const errorMessage =
-      payload && payload.error && payload.error.message
-        ? payload.error.message
-        : "OpenAI request failed";
-    throw new Error(errorMessage);
-  }
-
-  const text = extractOutputText(payload);
-  const parsed = parseJsonResponse(text);
-
-  if (!parsed || !validateAiPack(parsed)) {
-    throw new Error("OpenAI returned an unexpected response shape.");
-  }
-
-  return parsed;
-}
-
 async function handleApi(req, res) {
   const pathname = getPathname(req.url);
 
   if (req.method === "GET" && pathname.endsWith("/api/status")) {
+    const runtime = await getAiRuntime();
+    const provider = runtime.getPreferredProvider();
+
     sendJson(res, 200, {
-      configured: Boolean(OPENAI_API_KEY),
-      provider: "OpenAI",
-      model: OPENAI_MODEL,
-      mode: OPENAI_API_KEY ? "live" : "demo"
+      configured: provider !== "demo",
+      provider: runtime.getProviderLabel(provider),
+      model: runtime.getPreferredModel(provider === "demo" ? "openai" : provider),
+      mode: provider === "demo" ? "demo" : "live",
+      providers: runtime.getConfiguredProviders()
     });
     return true;
   }
@@ -256,18 +117,21 @@ async function handleApi(req, res) {
         return true;
       }
 
-      if (!OPENAI_API_KEY) {
+      const runtime = await getAiRuntime();
+      const provider = runtime.getPreferredProvider();
+
+      if (provider === "demo") {
         sendJson(res, 503, {
-          error: "OpenAI is not configured. Add OPENAI_API_KEY to your .env file."
+          error: "No AI provider is configured. Add OPENAI_API_KEY or ANTHROPIC_API_KEY to your .env file."
         });
         return true;
       }
 
-      const pack = await generateOpenAiPack(request, score);
+      const result = await runtime.generateAiPack(request, score);
       sendJson(res, 200, {
-        provider: "OpenAI",
-        model: OPENAI_MODEL,
-        pack
+        provider: runtime.getProviderLabel(result.provider),
+        model: result.model,
+        pack: result.pack
       });
       return true;
     } catch (error) {
@@ -323,11 +187,13 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
+  const runtime = await getAiRuntime();
+  const provider = runtime.getPreferredProvider();
   console.log(`Internal Comms Ops dashboard running at http://localhost:${PORT}`);
   console.log(
-    OPENAI_API_KEY
-      ? `OpenAI connected in live mode using model ${OPENAI_MODEL}.`
-      : "OpenAI not configured. Running in demo mode."
+    provider === "demo"
+      ? "No AI provider configured. Running in demo mode."
+      : `${runtime.getProviderLabel(provider)} connected in live mode using model ${runtime.getPreferredModel(provider)}.`
   );
 });

@@ -2,6 +2,9 @@
 
 Enterprise internal comms operations for one human operator plus AI.
 
+Live demo:
+[internal-comms-ops-dashboard.vercel.app](https://internal-comms-ops-dashboard.vercel.app)
+
 This project is a realistic enterprise dashboard that replaces much of the admin, coordination, drafting and triage load of a traditional internal comms team. It gives a single operator an AI-assisted control centre for request intake, prioritisation, drafting, approvals, calendar management, content reuse and performance monitoring.
 
 ![Social preview](./assets/social-preview.svg)
@@ -84,6 +87,20 @@ npm start
 Then open [http://localhost:3000](http://localhost:3000).
 
 If no AI key is configured, the dashboard still runs in demo mode with built-in recommendation, draft and insight generation.
+
+## Hosted Deployment
+
+The public demo is deployed on Vercel with server-side AI generation so secrets stay off the client.
+
+Set these project environment variables if you redeploy it elsewhere:
+
+```bash
+OPENAI_API_KEY=...
+OPENAI_MODEL=gpt-4o
+
+ANTHROPIC_API_KEY=...
+ANTHROPIC_MODEL=claude-sonnet-4-20250514
+```
 
 ## Project Structure
 

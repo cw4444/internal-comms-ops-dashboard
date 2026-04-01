@@ -22,6 +22,30 @@ const MIME_TYPES = {
   ".ico": "image/x-icon"
 };
 
+const SECURITY_HEADERS = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Content-Security-Policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'"
+};
+
+const rateLimiter = new Map();
+const RATE_LIMIT_REQUESTS = 10;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+
+function isRateLimited(req) {
+  const ip = req.socket.remoteAddress || "unknown";
+  const now = Date.now();
+  const entry = rateLimiter.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimiter.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT_REQUESTS) return true;
+  entry.count++;
+  return false;
+}
+
 function loadEnvFile(filePath) {
   if (!fs.existsSync(filePath)) return;
 
@@ -107,14 +131,30 @@ async function handleApi(req, res) {
   }
 
   if (req.method === "POST" && pathname.endsWith("/api/generate")) {
+    if (isRateLimited(req)) {
+      sendJson(res, 429, { error: "Too many requests. Please wait before trying again." });
+      return true;
+    }
+
     try {
       const body = await readJsonBody(req);
       const request = body.request || {};
       const score = body.score || {};
 
-      if (!request.title || !request.owner || !request.brief) {
-        sendJson(res, 400, { error: "Missing required request fields." });
-        return true;
+      const requiredStrings = ["title", "owner", "brief"];
+      for (const field of requiredStrings) {
+        if (typeof request[field] !== "string" || !request[field].trim()) {
+          sendJson(res, 400, { error: `Missing or invalid required field: ${field}.` });
+          return true;
+        }
+      }
+
+      const MAX_FIELD_LENGTHS = { title: 200, owner: 100, brief: 2000, businessUnit: 100, objective: 100 };
+      for (const [field, max] of Object.entries(MAX_FIELD_LENGTHS)) {
+        if (typeof request[field] === "string" && request[field].length > max) {
+          sendJson(res, 400, { error: `Field "${field}" exceeds the maximum allowed length.` });
+          return true;
+        }
       }
 
       const runtime = await getAiRuntime();
@@ -157,6 +197,9 @@ function getPathname(urlValue) {
 }
 
 const server = http.createServer(async (req, res) => {
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    res.setHeader(key, value);
+  }
   if ((await handleApi(req, res)) === true) {
     return;
   }

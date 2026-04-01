@@ -6,6 +6,15 @@ const plusDays = (days) => {
   return date.toISOString().split("T")[0];
 };
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 const state = {
   activeDraft: "email",
   currentRequest: null,
@@ -451,14 +460,14 @@ function renderScorecard(score) {
   elements.scoreSummary.innerHTML = `
     <div class="score-card">
       <h4>Priority Band</h4>
-      <div class="score-total">${score.total}</div>
-      <p>${score.band} priority recommended for operator queue placement.</p>
+      <div class="score-total">${escapeHtml(score.total)}</div>
+      <p>${escapeHtml(score.band)} priority recommended for operator queue placement.</p>
     </div>
     <div class="metadata">
-      <span class="pill">Urgency ${score.urgency}</span>
-      <span class="pill">Reach ${score.reach}</span>
-      <span class="pill">Risk ${score.risk}</span>
-      <span class="pill">Complexity ${score.complexity}</span>
+      <span class="pill">Urgency ${escapeHtml(score.urgency)}</span>
+      <span class="pill">Reach ${escapeHtml(score.reach)}</span>
+      <span class="pill">Risk ${escapeHtml(score.risk)}</span>
+      <span class="pill">Complexity ${escapeHtml(score.complexity)}</span>
     </div>
   `;
 
@@ -472,21 +481,21 @@ function renderRecommendation(recommendation, request, score) {
   elements.recommendation.innerHTML = `
     <div class="recommendation-block">
       <h4>Recommended audience</h4>
-      <p>${recommendation.audience}</p>
+      <p>${escapeHtml(recommendation.audience)}</p>
     </div>
     <div class="recommendation-block">
       <h4>Channel mix</h4>
       <div class="recommendation-list">
-        ${recommendation.channels.map((channel) => `<span class="pill">${channel}</span>`).join("")}
+        ${recommendation.channels.map((channel) => `<span class="pill">${escapeHtml(channel)}</span>`).join("")}
       </div>
     </div>
     <div class="recommendation-block">
       <h4>Distribution guidance</h4>
-      <p>${recommendation.cadence}</p>
+      <p>${escapeHtml(recommendation.cadence)}</p>
     </div>
     <div class="recommendation-block">
       <h4>Why AI chose this mix</h4>
-      <p>${recommendation.rationale} Current score is ${score.total} and the objective is ${request.objective.toLowerCase()}.</p>
+      <p>${escapeHtml(recommendation.rationale)} Current score is ${escapeHtml(score.total)} and the objective is ${escapeHtml(request.objective.toLowerCase())}.</p>
     </div>
   `;
 }
@@ -504,13 +513,13 @@ function renderWorkflow() {
         <article class="workflow-item">
           <div class="workflow-top">
             <div>
-              <h4>${request.id} · ${request.title}</h4>
-              <p>${request.owner} · ${request.businessUnit} · Audience ${request.audienceSize.toLocaleString()}</p>
+              <h4>${escapeHtml(request.id)} · ${escapeHtml(request.title)}</h4>
+              <p>${escapeHtml(request.owner)} · ${escapeHtml(request.businessUnit)} · Audience ${escapeHtml(request.audienceSize.toLocaleString())}</p>
             </div>
-            <span class="status-chip ${request.stage}">${request.status}</span>
+            <span class="status-chip ${escapeHtml(request.stage)}">${escapeHtml(request.status)}</span>
           </div>
-          <p>Priority ${request.priority} · Score ${request.score} · Channels ${request.channels.join(", ")}</p>
-          <p>Risk note: ${request.risk}</p>
+          <p>Priority ${escapeHtml(request.priority)} · Score ${escapeHtml(request.score)} · Channels ${request.channels.map(escapeHtml).join(", ")}</p>
+          <p>Risk note: ${escapeHtml(request.risk)}</p>
         </article>
       `
     )
@@ -524,13 +533,13 @@ function renderCalendar() {
         <article class="calendar-card">
           <div class="calendar-top">
             <div>
-              <h4>${item.title}</h4>
-              <p>${item.date} · ${item.channel}</p>
+              <h4>${escapeHtml(item.title)}</h4>
+              <p>${escapeHtml(item.date)} · ${escapeHtml(item.channel)}</p>
             </div>
-            <span class="pill">${item.owner}</span>
+            <span class="pill">${escapeHtml(item.owner)}</span>
           </div>
-          <p>Audience: ${item.audience}</p>
-          <p>${item.note}</p>
+          <p>Audience: ${escapeHtml(item.audience)}</p>
+          <p>${escapeHtml(item.note)}</p>
         </article>
       `
     )
@@ -544,14 +553,14 @@ function renderRepository(items = state.repository) {
         <article class="repository-item">
           <div class="repository-top">
             <div>
-              <h4>${item.title}</h4>
-              <p>${item.type} · ${item.owner} · ${item.updated}</p>
+              <h4>${escapeHtml(item.title)}</h4>
+              <p>${escapeHtml(item.type)} · ${escapeHtml(item.owner)} · ${escapeHtml(item.updated)}</p>
             </div>
-            <span class="pill">${item.audience}</span>
+            <span class="pill">${escapeHtml(item.audience)}</span>
           </div>
-          <p>${item.description}</p>
+          <p>${escapeHtml(item.description)}</p>
           <div class="recommendation-list">
-            ${item.tags.map((tag) => `<span class="pill">${tag}</span>`).join("")}
+            ${item.tags.map((tag) => `<span class="pill">${escapeHtml(tag)}</span>`).join("")}
           </div>
         </article>
       `
@@ -564,9 +573,9 @@ function renderAnalytics() {
     .map(
       (metric) => `
         <article class="analytics-card">
-          <h4>${metric.label}</h4>
-          <div class="score-total">${metric.value}</div>
-          <p>${metric.detail}</p>
+          <h4>${escapeHtml(metric.label)}</h4>
+          <div class="score-total">${escapeHtml(metric.value)}</div>
+          <p>${escapeHtml(metric.detail)}</p>
         </article>
       `
     )
@@ -576,11 +585,11 @@ function renderAnalytics() {
     .map(
       (channel) => `
         <div class="bar-row">
-          <strong>${channel.label}</strong>
+          <strong>${escapeHtml(channel.label)}</strong>
           <div class="bar-track">
-            <div class="bar-fill" style="width:${channel.value}%"></div>
+            <div class="bar-fill" style="width:${escapeHtml(channel.value)}%"></div>
           </div>
-          <span>${channel.value}</span>
+          <span>${escapeHtml(channel.value)}</span>
         </div>
       `
     )
@@ -594,13 +603,13 @@ function renderInsights() {
         <article class="insight-card">
           <div class="insight-top">
             <div>
-              <h4>${insight.title}</h4>
-              <p>${insight.summary}</p>
+              <h4>${escapeHtml(insight.title)}</h4>
+              <p>${escapeHtml(insight.summary)}</p>
             </div>
-            <span class="status-chip ${insight.severity}">${insight.severity}</span>
+            <span class="status-chip ${escapeHtml(insight.severity)}">${escapeHtml(insight.severity)}</span>
           </div>
           <ul>
-            ${insight.points.map((point) => `<li>${point}</li>`).join("")}
+            ${insight.points.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}
           </ul>
         </article>
       `
@@ -616,10 +625,10 @@ function createRequestFromForm(formData) {
     businessUnit: formData.get("businessUnit"),
     objective: formData.get("objective"),
     brief: formData.get("brief"),
-    audienceSize: Number(formData.get("audienceSize")),
+    audienceSize: Number(formData.get("audienceSize")) || 0,
     deadline: formData.get("deadline"),
     actionDate: formData.get("actionDate"),
-    sensitivity: Number(formData.get("sensitivity")),
+    sensitivity: Math.min(10, Math.max(0, Number(formData.get("sensitivity")) || 0)),
     managerCascade: formData.get("managerCascade") === "on"
   };
 }

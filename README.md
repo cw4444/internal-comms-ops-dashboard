@@ -142,4 +142,4 @@ Internal comms teams often spend too much time chasing inputs, formatting drafts
 
 ## License
 
-Released under the MIT License. See [LICENSE](./LICENSE).
+This software is currently not licensed for commercial use. If you’d like to use this in a business setting or install it professionally, please contact me at cw4444@gmail.com

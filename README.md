@@ -142,4 +142,6 @@ Internal comms teams often spend too much time chasing inputs, formatting drafts
 
 ## License
 
-This software is currently not licensed for commercial use. If you’d like to use this in a business setting or install it professionally, please contact me at cw4444@gmail.com
+This project is proprietary and is not licensed for commercial use, redistribution, or client installation without prior written permission.
+
+Commercial licenses are available. For business use, professional installation, or deployment enquiries, contact: **cw4444@gmail.com**

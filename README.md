@@ -2,9 +2,6 @@
 
 Enterprise internal comms operations for one human operator plus AI.
 
-Live demo:
-[internal-comms-ops-dashboard.vercel.app](https://internal-comms-ops-dashboard-ffb9.vercel.app/)
-
 This project is a realistic enterprise dashboard that replaces much of the admin, coordination, drafting and triage load of a traditional internal comms team. It gives a single operator an AI-assisted control centre for request intake, prioritisation, drafting, approvals, calendar management, content reuse and performance monitoring.
 
 ![Social preview](./assets/social-preview.svg)

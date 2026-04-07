@@ -127,4 +127,4 @@ This prototype is aimed at large enterprise internal communications teams that w
 
 ## Why This Matters
 
-Internal comms teams often spend too much time chasing inputs, formatting drafts, managing stakeholder handoffs and duplicating content across channels. This concept shifts that workload into a compact operating layer so the human operator can focus on judgement, sequencing and message quality instead of admin drag.
+Internal comms teams often spend too much time chasing inputs, formatting drafts, managing stakeholder handoffs and duplicating content across channels. This concept shifts that workload into a compact operating layer so the human operator can focus on judgement, sequencing and message quality instead of admin drag using MCP connectors to integrate live data sources

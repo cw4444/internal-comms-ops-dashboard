@@ -206,7 +206,7 @@
                   Add <code>OPENAI_API_KEY</code> or <code>ANTHROPIC_API_KEY</code>
                   to the local <code>.env</code> file. Optional defaults:
                   <code>OPENAI_MODEL=gpt-4o</code> or
-                  <code>ANTHROPIC_MODEL=claude-sonnet-4-20250514</code>.
+                  <code>ANTHROPIC_MODEL=claude-sonnet-4-6</code>.
                 </p>
               </div>
               <div class="recommendation-block">
@@ -258,7 +258,18 @@
               <button class="tab" data-draft="faq">FAQ</button>
               <button class="tab" data-draft="manager">Manager Brief</button>
             </div>
+            <div class="draft-actions">
+              <button id="copy-draft-btn" title="Copy current draft to clipboard">Copy to clipboard</button>
+              <button id="download-draft-btn" title="Download current draft as a text file">Download .txt</button>
+              <button id="download-all-btn" title="Download all four drafts as a single file">Download full pack</button>
+              <button id="publish-notion-btn" title="Publish this draft to a Notion database">Publish to Notion</button>
+            </div>
             <pre id="draft-output" class="draft-output"></pre>
+            <div class="refine-bar">
+              <input id="refine-input" type="text" placeholder="Give feedback to refine this draft, e.g. 'make it shorter' or 'add a deadline warning'" />
+              <button id="refine-btn">Refine with AI</button>
+            </div>
+            <p id="refine-note" class="refine-note">Iterative refinement lets you improve drafts without re-submitting the full request.</p>
           </div>
 
           <div class="panel panel-large" id="workflow">

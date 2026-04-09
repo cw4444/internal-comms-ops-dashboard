@@ -24,6 +24,7 @@ const state = {
     model: "gpt-4o",
     mode: "demo"
   },
+  notion: false,
   requests: [
     {
       id: "CR-2418",
@@ -209,7 +210,14 @@ const elements = {
   channelPerformance: document.querySelector("#channel-performance"),
   insightsList: document.querySelector("#insights-list"),
   tabs: document.querySelectorAll(".tab"),
-  scrollButtons: document.querySelectorAll("[data-scroll-target]")
+  scrollButtons: document.querySelectorAll("[data-scroll-target]"),
+  publishNotionBtn: document.querySelector("#publish-notion-btn"),
+  copyDraftBtn: document.querySelector("#copy-draft-btn"),
+  downloadDraftBtn: document.querySelector("#download-draft-btn"),
+  downloadAllBtn: document.querySelector("#download-all-btn"),
+  refineInput: document.querySelector("#refine-input"),
+  refineBtn: document.querySelector("#refine-btn"),
+  refineNote: document.querySelector("#refine-note")
 };
 
 function updateGenerationNote(message, isError = false) {
@@ -251,6 +259,8 @@ async function fetchAiStatus() {
       model: payload.model || "gpt-4o",
       mode: payload.mode || "demo"
     };
+    state.notion = Boolean(payload.notion);
+    elements.publishNotionBtn.style.display = state.notion ? "" : "none";
     renderAiStatus();
     updateGenerationNote(
       state.ai.mode === "live"
@@ -739,6 +749,143 @@ function setActiveDraft(type) {
   renderDraft();
 }
 
+function downloadTextFile(filename, content) {
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function flashButton(button, message) {
+  const original = button.textContent;
+  button.textContent = message;
+  button.classList.add("success");
+  setTimeout(() => {
+    button.textContent = original;
+    button.classList.remove("success");
+  }, 1800);
+}
+
+async function copyDraftToClipboard() {
+  if (!state.currentRequest) return;
+  const text = state.currentRequest.drafts[state.activeDraft];
+  try {
+    await navigator.clipboard.writeText(text);
+    flashButton(elements.copyDraftBtn, "Copied");
+  } catch {
+    downloadTextFile(`draft-${state.activeDraft}.txt`, text);
+  }
+}
+
+function downloadCurrentDraft() {
+  if (!state.currentRequest) return;
+  const text = state.currentRequest.drafts[state.activeDraft];
+  const title = state.currentRequest.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+  downloadTextFile(`${title}-${state.activeDraft}.txt`, text);
+}
+
+function downloadFullPack() {
+  if (!state.currentRequest) return;
+  const drafts = state.currentRequest.drafts;
+  const title = state.currentRequest.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+  const sections = [
+    "=== EMAIL DRAFT ===\n\n" + drafts.email,
+    "=== INTRANET DRAFT ===\n\n" + drafts.intranet,
+    "=== FAQ DRAFT ===\n\n" + drafts.faq,
+    "=== MANAGER BRIEF ===\n\n" + drafts.manager
+  ];
+  downloadTextFile(`${title}-full-pack.txt`, sections.join("\n\n\n"));
+}
+
+async function publishToNotion() {
+  if (!state.currentRequest) return;
+  const btn = elements.publishNotionBtn;
+  btn.disabled = true;
+  btn.textContent = "Publishing...";
+
+  try {
+    const response = await fetch("/api/publish-notion", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: state.currentRequest.title,
+        owner: state.currentRequest.owner,
+        businessUnit: state.currentRequest.businessUnit,
+        priority: state.currentRequest.score?.band || "",
+        draftType: state.activeDraft,
+        draft: state.currentRequest.drafts[state.activeDraft],
+        recommendation: state.currentRequest.recommendation
+      })
+    });
+
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Publish failed.");
+
+    flashButton(btn, "Published");
+    if (payload.url) {
+      elements.refineNote.textContent = `Published to Notion successfully.`;
+      elements.refineNote.style.color = "var(--green)";
+    }
+  } catch (error) {
+    btn.textContent = "Publish to Notion";
+    btn.disabled = false;
+    elements.refineNote.textContent = `Notion publish failed: ${error.message}`;
+    elements.refineNote.style.color = "var(--red)";
+  }
+}
+
+async function refineDraft() {
+  if (!state.currentRequest) return;
+  const feedback = elements.refineInput.value.trim();
+  if (!feedback) return;
+
+  const draftType = state.activeDraft;
+  const currentDraft = state.currentRequest.drafts[draftType];
+
+  elements.refineBtn.disabled = true;
+  elements.refineBtn.textContent = "Refining...";
+  elements.refineNote.textContent = `Sending feedback to ${state.ai.provider} for ${draftType} refinement...`;
+  elements.refineNote.style.color = "var(--muted)";
+
+  try {
+    const response = await fetch("/api/refine", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        draftType,
+        currentDraft,
+        feedback,
+        request: {
+          title: state.currentRequest.title,
+          owner: state.currentRequest.owner,
+          businessUnit: state.currentRequest.businessUnit,
+          objective: state.currentRequest.objective,
+          brief: state.currentRequest.brief
+        }
+      })
+    });
+
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || "Refinement failed.");
+
+    state.currentRequest.drafts[draftType] = payload.refined;
+    renderDraft();
+    elements.refineInput.value = "";
+    elements.refineNote.textContent = `Draft refined by ${payload.provider} (${payload.model}). You can refine again or switch tabs.`;
+  } catch (error) {
+    elements.refineNote.textContent = `Refinement failed: ${error.message}`;
+    elements.refineNote.style.color = "var(--red)";
+  } finally {
+    elements.refineBtn.disabled = false;
+    elements.refineBtn.textContent = "Refine with AI";
+  }
+}
+
 function bindEvents() {
   elements.form.addEventListener("submit", submitRequest);
   elements.repositorySearch.addEventListener("input", filterRepository);
@@ -749,6 +896,14 @@ function bindEvents() {
     button.addEventListener("click", () => {
       document.querySelector(button.dataset.scrollTarget)?.scrollIntoView({ behavior: "smooth" });
     });
+  });
+  elements.copyDraftBtn.addEventListener("click", copyDraftToClipboard);
+  elements.downloadDraftBtn.addEventListener("click", downloadCurrentDraft);
+  elements.downloadAllBtn.addEventListener("click", downloadFullPack);
+  elements.publishNotionBtn.addEventListener("click", publishToNotion);
+  elements.refineBtn.addEventListener("click", refineDraft);
+  elements.refineInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") refineDraft();
   });
 }
 

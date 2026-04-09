@@ -487,6 +487,84 @@ code {
   color: white;
 }
 
+.draft-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.draft-actions button {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 8px 14px;
+  background: var(--surface-strong);
+  color: var(--navy);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.draft-actions button:hover {
+  background: #edf4ff;
+  transform: translateY(-1px);
+}
+
+.draft-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.draft-actions button.success {
+  background: rgba(33, 140, 90, 0.12);
+  color: var(--green);
+  border-color: rgba(33, 140, 90, 0.3);
+}
+
+.refine-bar {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.refine-bar input {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.refine-bar button {
+  border: 0;
+  border-radius: 14px;
+  padding: 12px 18px;
+  background: var(--navy);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 160ms ease, opacity 160ms ease;
+  white-space: nowrap;
+}
+
+.refine-bar button:hover {
+  transform: translateY(-1px);
+}
+
+.refine-bar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.refine-note {
+  margin: 8px 0 0;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
 .draft-output {
   margin: 0;
   min-height: 340px;

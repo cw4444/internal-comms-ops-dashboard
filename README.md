@@ -6,7 +6,6 @@ This project is a realistic enterprise dashboard that replaces much of the admin
 
 ![Social preview](./assets/social-preview.svg)
 
-![Dashboard overview](./assets/dashboard-overview.svg)
 
 ## Proof Of Concept
 
